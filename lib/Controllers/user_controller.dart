@@ -21,7 +21,7 @@ class UserController extends ControllerMVC {
   }
 
   Future<void> login({email, password}) async {
-    loadingDialog();
+    // loadingDialog();
     repository.login(email: email, password: password).then((value) {
       //print(value.apiToken);
       if (value != null && value.id != null) {
@@ -29,9 +29,12 @@ class UserController extends ControllerMVC {
         Navigator.of(scaffoldKey.currentContext)
             .pushNamedAndRemoveUntil('/NewsFeed', (route) => false);
       } else {
-        scaffoldKey.currentState.showSnackBar(SnackBar(
-          content: Text('${repository.serverMessage}'),
-        ));
+         Future.delayed(Duration(seconds: 4), (){
+              scaffoldKey.currentState.showSnackBar(SnackBar(
+                content: Text('${repository.serverMessage}'),
+              ));
+        });
+        
       }
     });
   }
